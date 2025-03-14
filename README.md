@@ -5,6 +5,9 @@ docker-compose build --progress=plain
 # Copy vendor trong container về máy host
 docker cp laravel_octane_app:/var/www/vendor/. ./vendor
 
+# Copy composer.lock trong container về máy host
+docker cp laravel_octane_app:/var/www/composer.lock ./composer.lock
+
 ```
 ```shell
 php artisan octane:start --server=swoole --host=0.0.0.0 --port=8000

@@ -29,9 +29,21 @@ RUN pecl install swoole && docker-php-ext-enable swoole
 # Cài đặt Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy mã nguồn
+# Tạo thư mục làm việc
 WORKDIR /var/www
-COPY . .
+
+# Sao chép composer.json và composer.lock trước
+COPY composer.json ./
+RUN if [ -f "composer.lock" ]; then cp composer.lock ./; fi
+
+# Cài đặt dependencies trước khi thêm source code
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+
+# Copy toàn bộ source code vào container
+COPY --chown=www-data:www-data . .
+
+# Chạy lại composer để kích hoạt các scripts của Laravel
+RUN composer dump-autoload && composer run-script post-autoload-dump
 
 # Sao chép file cấu hình php.ini
 COPY ./docker/php.ini /usr/local/etc/php/conf.d/php.ini
@@ -40,13 +52,12 @@ COPY ./docker/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 # Thêm file cấu hình Supervisor (nếu muốn quản lý Octane bằng Supervisor)
 COPY ./docker/supervisor.conf /etc/supervisor.conf
 
-# Phân quyền
+# Phân quyền thư mục storage và bootstrap/cache
 RUN chown -R www-data:www-data /var/www \
     && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
+# Chạy container với quyền www-data
 USER www-data
-
-RUN composer install --optimize-autoloader --no-dev
 
 # Mở cổng cho Octane
 EXPOSE 8000
