@@ -1,14 +1,29 @@
-.git
-.github
-Dockerfile
+# Bỏ qua thư mục và file không cần thiết
+node_modules
+npm-debug.log
+yarn-error.log
+.DS_Store
+.env
+.env.local
+.env.testing
+.env.production
+storage/*.log
+storage/framework/cache/*
+storage/framework/views/*
+storage/framework/sessions/*
+bootstrap/cache/*
+
+# Docker và hệ thống
 docker-compose.yml
-*.ini
-*.md
-*.log
-/vendor
-/node_modules
-/storage/*/*
-/bootstrap/cache/*
-/tests
-/public/build
-/public/hot
+docker-compose.override.yml
+.Dockerfile.swp
+.dockerignore
+
+# Git
+.git
+.gitignore
+
+# IDE và Editor
+.vscode/
+.idea/
+*.swp
