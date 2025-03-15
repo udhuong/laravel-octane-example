@@ -9,18 +9,18 @@ export default defineConfig({
         port: 5173,
         strictPort: true,
         cors: true, // Bật CORS
-        origin: 'http://localhost:5173', // Chỉ định origin
+        // origin: 'http://localhost:5173', // Chỉ định origin
         headers: { // Cần cấu hình như này để laravel có thể lấy file css js từ vite
             'Access-Control-Allow-Origin': '*', // Cho phép tất cả truy cập
             'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
             'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         },
+        hmr: true,
     },
     plugins: [
         laravel({
             input: [
                 'resources/css/app.css', 'resources/js/app.js',
-                'resources/js/vue/main.js',
             ],
             refresh: true,
         }),

@@ -21,7 +21,8 @@ RUN apk add --no-cache \
 
 RUN apk add --no-cache curl && \
     curl -fsSL https://unofficial-builds.nodejs.org/download/release/v23.9.0/node-v23.9.0-linux-x64-musl.tar.gz | tar -xz -C /usr/local --strip-components=1 && \
-    npm install -g npm
+    npm install -g npm \
+    && npm install chokidar
 
 # Cài đặt các extension PHP cần thiết
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \

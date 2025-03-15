@@ -1,9 +1,10 @@
 <template>
     <div>
-        <h2>Login</h2>
+        <h2>Register</h2>
+        <input v-model="name" placeholder="Name" />
         <input v-model="email" placeholder="Email" />
         <input v-model="password" type="password" placeholder="Password" />
-        <button @click="login">Login</button>
+        <button @click="register">Register</button>
     </div>
 </template>
 
@@ -11,16 +12,16 @@
 import axios from 'axios';
 export default {
     data() {
-        return { email: '', password: '' };
+        return { name: '', email: '', password: '' };
     },
     methods: {
-        async login() {
-            let res = await axios.post('http://localhost:8000/api/login', {
+        async register() {
+            await axios.post('http://localhost:8000/api/register', {
+                name: this.name,
                 email: this.email,
                 password: this.password
             });
-            localStorage.setItem('token', res.data.token);
-            this.$router.push('/user');
+            this.$router.push('/login');
         }
     }
 };

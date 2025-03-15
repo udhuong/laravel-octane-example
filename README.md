@@ -10,7 +10,7 @@ docker cp laravel_octane_app:/var/www/composer.lock ./composer.lock
 
 ```
 ```shell
-php artisan octane:start --server=swoole --host=0.0.0.0 --port=8000
+php artisan octane:start --server=swoole --watch --host=0.0.0.0 --port=8000
 ```
 
 Khi clone project của tôi về các ông làm đúng các bước như sau:
