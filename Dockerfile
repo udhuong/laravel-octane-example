@@ -21,8 +21,7 @@ RUN apk add --no-cache \
 
 RUN apk add --no-cache curl && \
     curl -fsSL https://unofficial-builds.nodejs.org/download/release/v23.9.0/node-v23.9.0-linux-x64-musl.tar.gz | tar -xz -C /usr/local --strip-components=1 && \
-    npm install -g npm \
-    && npm install chokidar
+    npm install -g npm
 
 # Cài đặt các extension PHP cần thiết
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
@@ -49,13 +48,6 @@ COPY --chown=www-data:www-data . .
 
 # Chạy lại composer để kích hoạt các scripts của Laravel
 RUN composer dump-autoload && composer run-script post-autoload-dump
-
-# Sao chép file cấu hình php.ini
-COPY ./docker/php.ini /usr/local/etc/php/conf.d/php.ini
-# Sao chép file cấu hình OPcache
-COPY ./docker/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
-# Thêm file cấu hình Supervisor (nếu muốn quản lý Octane bằng Supervisor)
-COPY ./docker/supervisor.conf /etc/supervisor.conf
 
 # Phân quyền thư mục storage và bootstrap/cache
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data

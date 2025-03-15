@@ -8,16 +8,18 @@ services:
         volumes:
             - .:/var/www
             - ./vendor:/var/www/vendor/
-#            - /var/www/vendor/ #Giữ thư mục vendor bên trong container để tránh bị ghi đè bởi host (do host chưa có vendor trước khi chạy composer install).
-            - /var/www/storage/
-            - /var/www/bootstrap/cache/
+            - ./storage:/var/www/storage/
+            - ./bootstrap/cache:/var/www/bootstrap/cache/
+            - ./docker/php.ini:/usr/local/etc/php/conf.d/php.ini
+            - ./docker/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
+            - ./docker/supervisor.conf:/etc/supervisor.conf
             - .env:/var/www/.env
         ports:
             - "8000:8000"
             - "5173:5173"
         #Chỉ bật ở quá trình phát triển
-        command: >
-            sh -c "php artisan octane:start --server=swoole --watch --host=0.0.0.0 --port=8000 && npm run dev -- --host 0.0.0.0 --port 5173"
+#        command: >
+#            sh -c "php artisan octane:start --server=swoole --watch --host=0.0.0.0 --port=8000 && npm run dev -- --host 0.0.0.0 --port 5173"
         depends_on:
             - db
         networks:

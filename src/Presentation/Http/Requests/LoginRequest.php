@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Core\Presentation\Http\Requests;
 
 class LoginRequest extends ApiRequest
 {

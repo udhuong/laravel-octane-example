@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use Core\Presentation\Http\Controllers\AuthController;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;

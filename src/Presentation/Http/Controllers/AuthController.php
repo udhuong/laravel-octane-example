@@ -1,33 +1,39 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Core\Presentation\Http\Controllers;
 
-use App\Exceptions\AppException;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
-use App\Http\Resources\UserLoginResource;
-use App\Http\Response\Responder;
 use App\Models\User;
+use Core\Application\UseCases\CreateUserUseCase;
+use Core\Application\UseCases\GetDetailUserUseCase;
+use Core\Application\UseCases\LoginUserUseCase;
+use Core\Domain\Exceptions\AppException;
+use Core\Presentation\Http\Requests\LoginRequest;
+use Core\Presentation\Http\Requests\RegisterRequest;
+use Core\Presentation\Http\Response\Responder;
+use Core\Presentation\Http\Response\UserDetailResponse;
+use Core\Presentation\Http\Response\UserLoginResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function __construct(
+        private readonly CreateUserUseCase $createUserUseCase,
+        private readonly LoginUserUseCase $loginUserUseCase,
+        private readonly GetDetailUserUseCase $getDetailUserUseCase
+    ) {
+    }
+
     /**
      * Đăng ký người dùng mới
      *
      * @param RegisterRequest $request
      * @return JsonResponse
+     * @throws AppException
      */
     public function register(RegisterRequest $request): JsonResponse
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
-        ]);
-
+        $user = $this->createUserUseCase->handle($request->toUser(), $request->get('password'));
         return Responder::success([
             'id' => $user->id,
         ], 'Đăng ký thành công');
@@ -42,16 +48,8 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request): JsonResponse
     {
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            throw new AppException('Đăng nhập thất bại');
-        }
-
-        return Responder::success([
-            'token' => $user->createToken('auth_token')->plainTextToken,
-            'user' => new UserLoginResource($user),
-        ], 'Đăng nhập thành công');
+        $user = $this->loginUserUseCase->handle($request->get('email'), $request->get('password'));
+        return Responder::success(UserLoginResponse::format($user), 'Đăng nhập thành công');
     }
 
     /**
@@ -63,14 +61,9 @@ class AuthController extends Controller
      */
     public function detail(Request $request): JsonResponse
     {
-        $user = User::where('id', $request->id)->first();
-
-        if (!$user) {
-            throw new AppException('Không tìm thấy người dùng');
-        }
-
+        $user = $this->getDetailUserUseCase->handle($request->get('id'));
         return Responder::success([
-            new UserLoginResource($user)
+            UserDetailResponse::format($user)
         ], 'Lấy thông tin người dùng thành công');
     }
 

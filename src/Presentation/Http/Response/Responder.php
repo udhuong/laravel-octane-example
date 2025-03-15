@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Response;
+namespace Core\Presentation\Http\Response;
 
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
+use Laravel\Octane\Exceptions\DdException;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -36,8 +37,19 @@ class Responder
         ], $httpCode ?? Response::HTTP_OK);
     }
 
-    public static function failWithException(Throwable $exception, ?string $message = null, array|object|null $data = null, ?int $httpCode = null): JsonResponse
-    {
+    /**
+     * @throws Throwable
+     * @throws DdException
+     */
+    public static function failWithException(
+        Throwable $exception,
+        ?string $message = null,
+        array|object|null $data = null,
+        ?int $httpCode = null
+    ): JsonResponse {
+        if ($exception instanceof DdException) {
+            throw $exception;
+        }
         $message ??= $exception->getMessage();
         $httpCode ??= match (true) {
             $exception instanceof AuthenticationException => Response::HTTP_UNAUTHORIZED,
