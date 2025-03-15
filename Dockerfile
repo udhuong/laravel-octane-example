@@ -19,6 +19,10 @@ RUN apk add --no-cache \
     g++ \
     make
 
+RUN apk add --no-cache curl && \
+    curl -fsSL https://unofficial-builds.nodejs.org/download/release/v23.9.0/node-v23.9.0-linux-x64-musl.tar.gz | tar -xz -C /usr/local --strip-components=1 && \
+    npm install -g npm
+
 # Cài đặt các extension PHP cần thiết
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install pdo pdo_mysql gd opcache sockets pcntl posix
@@ -53,6 +57,7 @@ COPY ./docker/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 COPY ./docker/supervisor.conf /etc/supervisor.conf
 
 # Phân quyền thư mục storage và bootstrap/cache
+RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 RUN chown -R www-data:www-data /var/www \
     && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 

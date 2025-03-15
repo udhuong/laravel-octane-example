@@ -7,12 +7,14 @@ services:
         restart: unless-stopped
         volumes:
             - .:/var/www
-            - /var/www/vendor/ #Giữ thư mục vendor bên trong container để tránh bị ghi đè bởi host (do host chưa có vendor trước khi chạy composer install).
+            - ./vendor:/var/www/vendor/
+#            - /var/www/vendor/ #Giữ thư mục vendor bên trong container để tránh bị ghi đè bởi host (do host chưa có vendor trước khi chạy composer install).
             - /var/www/storage/
             - /var/www/bootstrap/cache/
             - .env:/var/www/.env
         ports:
             - "8000:8000"
+            - "5173:5173"
         depends_on:
             - db
         networks:

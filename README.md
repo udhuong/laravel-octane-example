@@ -18,4 +18,6 @@ Khi clone project của tôi về các ông làm đúng các bước như sau:
 $ docker-compose down --volumes  && docker-compose up --force-recreate --build
 
 $ docker exec -it laravel_octane_app php artisan migrate
+
+$ npm run dev -- --host 0.0.0.0 --port 5173
 ```
