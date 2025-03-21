@@ -34,9 +34,8 @@ class AuthController extends Controller
     public function register(RegisterRequest $request): JsonResponse
     {
         $user = $this->createUserUseCase->handle($request->toUser(), $request->get('password'));
-        return Responder::success([
-            'id' => $user->id,
-        ], 'Đăng ký thành công');
+        $response = ['id' => $user->id];
+        return Responder::success($response, 'Đăng ký thành công');
     }
 
     /**
@@ -61,10 +60,13 @@ class AuthController extends Controller
      */
     public function detail(Request $request): JsonResponse
     {
-        $user = $this->getDetailUserUseCase->handle($request->get('id'));
-        return Responder::success([
-            UserDetailResponse::format($user)
-        ], 'Lấy thông tin người dùng thành công');
+        $id = $request->get('id');
+        if (!$id) {
+            throw new AppException('Vui lòng truyền id người dùng');
+        }
+
+        $user = $this->getDetailUserUseCase->handle($id);
+        return Responder::success([UserDetailResponse::format($user)], 'Lấy thông tin người dùng thành công');
     }
 
     /**

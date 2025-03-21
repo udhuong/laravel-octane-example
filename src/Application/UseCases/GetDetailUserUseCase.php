@@ -16,11 +16,11 @@ class GetDetailUserUseCase
     /**
      * Đăng nhập người dùng
      *
-     * @param string $id
+     * @param int $id
      * @return User
      * @throws AppException
      */
-    public function handle(string $id): User
+    public function handle(int $id): User
     {
         $user = $this->userRepository->findById($id);
 
