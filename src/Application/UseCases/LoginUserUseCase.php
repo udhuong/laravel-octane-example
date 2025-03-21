@@ -3,9 +3,9 @@
 namespace Core\Application\UseCases;
 
 use Core\Domain\Entities\User;
-use Core\Domain\Exceptions\AppException;
 use Core\Domain\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
+use Udhuong\LaravelCommon\Domain\Exceptions\AppException;
 
 class LoginUserUseCase
 {

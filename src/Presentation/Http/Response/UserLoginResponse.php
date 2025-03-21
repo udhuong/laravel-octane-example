@@ -3,7 +3,6 @@
 namespace Core\Presentation\Http\Response;
 
 use Core\Domain\Entities\User;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserLoginResponse extends JsonResource

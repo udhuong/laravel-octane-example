@@ -3,8 +3,8 @@
 namespace Core\Application\UseCases;
 
 use Core\Domain\Entities\User;
-use Core\Domain\Exceptions\AppException;
 use Core\Domain\Repositories\UserRepository;
+use Udhuong\LaravelCommon\Domain\Exceptions\AppException;
 
 class CreateUserUseCase
 {

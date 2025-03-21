@@ -4,6 +4,7 @@ namespace Core\Presentation\Http\Requests;
 
 use Core\Domain\Entities\User;
 use Core\Domain\Factories\UserFactory;
+use Udhuong\LaravelCommon\Presentation\Http\Requests\ApiRequest;
 
 class RegisterRequest extends ApiRequest
 {

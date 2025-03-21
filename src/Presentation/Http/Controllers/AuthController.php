@@ -2,18 +2,18 @@
 
 namespace Core\Presentation\Http\Controllers;
 
-use App\Models\User;
 use Core\Application\UseCases\CreateUserUseCase;
 use Core\Application\UseCases\GetDetailUserUseCase;
 use Core\Application\UseCases\LoginUserUseCase;
-use Core\Domain\Exceptions\AppException;
 use Core\Presentation\Http\Requests\LoginRequest;
 use Core\Presentation\Http\Requests\RegisterRequest;
-use Core\Presentation\Http\Response\Responder;
 use Core\Presentation\Http\Response\UserDetailResponse;
 use Core\Presentation\Http\Response\UserLoginResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Udhuong\LaravelCommon\Domain\Exceptions\AppException;
+use Udhuong\LaravelCommon\Presentation\Http\Controllers\Controller;
+use Udhuong\LaravelCommon\Presentation\Http\Response\Responder;
 
 class AuthController extends Controller
 {

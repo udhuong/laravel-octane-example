@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "624dd9c059f3ab45ac5b196b3780d3f6",
+    "content-hash": "b4dd5832cc4b3d7d4e635d1d7108b68c",
     "packages": [
         {
             "name": "brick/math",
@@ -5893,6 +5893,55 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/v2.3.0"
             },
             "time": "2024-12-21T16:25:41+00:00"
+        },
+        {
+            "name": "udhuong/laravel-common",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/udhuong/laravel-common.git",
+                "reference": "bb0c6a8ad6645c2dad9687a88b18a100331021f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/udhuong/laravel-common/zipball/bb0c6a8ad6645c2dad9687a88b18a100331021f1",
+                "reference": "bb0c6a8ad6645c2dad9687a88b18a100331021f1",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^11.0|^12.0",
+                "laravel/octane": "^2.8",
+                "php": "^8.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Udhuong\\LaravelCommon\\LaravelCommonServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Udhuong\\LaravelCommon\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "udhuong",
+                    "email": "ungdinhhuong@gmail.com"
+                }
+            ],
+            "description": "Util common for laravel",
+            "support": {
+                "issues": "https://github.com/udhuong/laravel-common/issues",
+                "source": "https://github.com/udhuong/laravel-common/tree/v1.0.0"
+            },
+            "time": "2025-03-21T15:49:40+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
